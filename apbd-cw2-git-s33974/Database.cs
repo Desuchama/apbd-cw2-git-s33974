@@ -46,6 +46,7 @@ public class Database
                 Console.WriteLine($"{l.leaseID} successfully returned. Penalty: {l.getPenalty()}");
                 l.SetEndDate(DateTime.Now);
             }
+            else if (l.leaseID == id) Console.WriteLine($"{l.leaseID} could not be returned. No active lease with this ID found.");
         }
     }
 }

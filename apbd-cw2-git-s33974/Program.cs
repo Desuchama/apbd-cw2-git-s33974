@@ -8,6 +8,7 @@ public class Program
         
         Employee e1 = new Employee("Abel", "-");
         Employee e2 = new Employee("Cain", "-");
+        Student s1 = new Student("bruno", "bednarski", 33974);
         
         Laptop l1 = new Laptop("HP", "Notebook", 1280, 720, 13.0, 8);
         Laptop l2 = new Laptop("Acer", "Nitro 5", 1920, 1080, 15.3, 16);
@@ -18,6 +19,7 @@ public class Program
         
         db.users.Add(e1);
         db.users.Add(e2);
+        db.users.Add(s1);
         
         db.equipments.Add(l1);
         db.equipments.Add(l2);
@@ -27,6 +29,7 @@ public class Program
         db.equipments.Add(p2);
         Console.WriteLine(e1.ToString());
         Console.WriteLine(e2.ToString());
+        Console.WriteLine("");
         
         db.CreateLease(l1, e1, new DateTime(2020, 1, 1), null, new DateTime(2020, 2, 1) , 0.20);
         db.CreateLease(l2, e1, new DateTime(2026, 3, 15), new DateTime(2026, 3, 30), new DateTime(2026, 3, 30), 0.20);
@@ -43,11 +46,15 @@ public class Program
         
         db.ReturnEquipment(1);
         db.ReturnEquipment(2);
-        
+        db.ReturnEquipment(6);
+        Console.WriteLine();
+
         ReportPrinter rp = new ReportPrinter(db);
         
         rp.printPenalties();
+        Console.WriteLine();
         rp.printActiveLeaseReport();
+        Console.WriteLine();
         rp.printCompleteReport();
     }
 }
