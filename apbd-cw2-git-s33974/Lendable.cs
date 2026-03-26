@@ -2,6 +2,6 @@
 
 public interface Lendable
 {
-    Guid? LendEquipment();
+    bool LendEquipment();
     void ReturnEquipment();
 }
