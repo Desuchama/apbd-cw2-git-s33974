@@ -13,16 +13,13 @@ public class Lease()
     public DateTime endDate;
     public TimeSpan late;
     public double dailyRate;
-    public int? lateDays;
+    public int lateDays;
 
     public Lease(Equipment eq, User us, DateTime startDate, DateTime endDate, double dailyRate) : this()
     {
-        if (eq.available && us.addLease())
-        {
-            this.user = us;
-            this.equipment = eq;
-        }
-        else throw new Exception("Equipment unavailable or lease limit reached");
+        this.user = us;
+        this.equipment = eq;
+        //else throw new Exception("Equipment unavailable or lease limit reached");
         this.startDate = startDate; 
         this.endDate = endDate;
         this.late = DateTime.Now - endDate;
