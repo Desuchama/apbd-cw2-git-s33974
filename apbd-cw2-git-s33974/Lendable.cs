@@ -2,6 +2,6 @@
 
 public interface Lendable
 {
-    bool LendEquipment();
+    bool MakeUnavailable();
     void ReturnEquipment();
 }

@@ -2,7 +2,9 @@
 
 public abstract class User(string role, string name, string surname, int allowedLeaseCount)
 {
-    public Guid userGuid = Guid.NewGuid();
+    private static int _nextId = 1;
+    
+    public int userID = _nextId++;
     public string role = role;
     public string personName = name;
     public string personSurname = surname;
@@ -30,6 +32,6 @@ public abstract class User(string role, string name, string surname, int allowed
 
     public override string ToString()
     {
-        return role + " GUID: " + userGuid + " Name: " + personName + " " + personSurname + ", Leases: " + currentLeaseCount + "/" + allowedLeaseCount;
+        return role + " GUID: " + userID + " Name: " + personName + " " + personSurname + ", Leases: " + currentLeaseCount + "/" + allowedLeaseCount;
     }
 }

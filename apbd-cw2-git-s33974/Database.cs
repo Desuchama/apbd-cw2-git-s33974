@@ -2,10 +2,20 @@
 
 public class Database
 {
-    public List<User> users = new List<User>();
-    public List<Equipment> equipments = new List<Equipment>();
-    public List<Lease> leases = new List<Lease>();
-    
+    public List<User> users = new();
+    public List<Equipment> equipments = new();
+    public List<Lease> leases = new();
+
+    public void RegisterUser(User user)
+    {
+        if (!users.Contains(user)) users.Add(user);
+    }
+
+    public void RegisterEquipment(Equipment e)
+    {
+        if (!equipments.Contains(e)) equipments.Add(e);
+    }
+
     public void printCompleteReport()
     {   
         Console.WriteLine($"Users: {users.Count} \nEquipment pieces: {equipments.Count} \nLeases: {leases.Count}\n");

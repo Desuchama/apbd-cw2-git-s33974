@@ -4,6 +4,9 @@ namespace apbd_cw2_git_s33974;
 
 public class Lease()
 {   
+    private static int _nextId = 1;
+
+    public int leaseID = _nextId++;
     public Equipment equipment;
     public User user;
     public DateTime startDate;
@@ -24,9 +27,7 @@ public class Lease()
         this.endDate = endDate;
         this.late = DateTime.Now - endDate;
         this.dailyRate = dailyRate;
-        if (late.Days > 0)
-            this.lateDays = late.Days;
-        else this.lateDays = 0;
+        this.lateDays = late.Days > 0 ? late.Days : 0;
     }
 
     public double? getPenalty()
