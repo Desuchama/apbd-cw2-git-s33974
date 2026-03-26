@@ -15,22 +15,38 @@ public class Database
     {
         if (!equipments.Contains(e)) equipments.Add(e);
     }
-
-    public void CreateLease(Equipment eq, User us, DateTime startDate, DateTime endDate, double dailyRate)
+//GŁÓWNA LOGIKA BIZNESOWA
+    public void CreateLease(Equipment eq, User us, DateTime startDate, DateTime endDate, DateTime deadLine, double dailyRate)
     {
         bool allowed = true;
         int userOccurenceCounter = 0;
+        string errorCause = "";
+            if (!eq.available)
+            {
+                allowed = false;
+                errorCause = $"Equipment {eq} already leased.";
+            }
+            
         foreach (Lease l in leases)
         {
-            if (l.equipment.Equals(eq)) allowed = false;
-            if (l.user.Equals(us)) userOccurenceCounter++;
+            if (l.user.Equals(us) && !l.endDate.HasValue) userOccurenceCounter++;
         }
-        if (userOccurenceCounter >= us.allowedLeaseCount) allowed = false;
+        
+        if (userOccurenceCounter >= us.allowedLeaseCount)
+        {
+            allowed = false;
+            errorCause = $"User {us} has reached their limit of active leases.";
+        }
         if (allowed)
-            leases.Add(new Lease(eq, us, startDate, endDate, dailyRate));
-        else Console.WriteLine("Could not create the lease object");
+            leases.Add(new Lease(eq, us, startDate, endDate, deadLine, dailyRate));
+        else Console.WriteLine("Could not create the lease object; " + errorCause);
     }
 
+    public void printActiveLeaseReport()
+    {
+        
+    }
+    
     public void printCompleteReport()
     {   
         Console.WriteLine($"Users: {users.Count} \nEquipment pieces: {equipments.Count} \nLeases: {leases.Count}\n");

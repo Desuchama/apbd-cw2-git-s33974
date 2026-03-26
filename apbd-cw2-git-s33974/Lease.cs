@@ -10,21 +10,23 @@ public class Lease()
     public Equipment equipment;
     public User user;
     public DateTime startDate;
-    public DateTime endDate;
+    public DateTime? endDate;
+    public DateTime deadLine;
     public TimeSpan late;
     public double dailyRate;
     public int lateDays;
 
-    public Lease(Equipment eq, User us, DateTime startDate, DateTime endDate, double dailyRate) : this()
+    public Lease(Equipment eq, User us, DateTime startDate, DateTime deadLine, DateTime? endDate, double dailyRate) : this()
     {
         this.user = us;
         this.equipment = eq;
         //else throw new Exception("Equipment unavailable or lease limit reached");
         this.startDate = startDate; 
         this.endDate = endDate;
-        this.late = DateTime.Now - endDate;
+        this.late = (endDate ?? DateTime.Now) - deadLine;
         this.dailyRate = dailyRate;
         this.lateDays = late.Days > 0 ? late.Days : 0;
+        eq.MakeUnavailable();
     }
 
     public double? getPenalty()
