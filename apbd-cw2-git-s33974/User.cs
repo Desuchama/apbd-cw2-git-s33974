@@ -1,6 +1,6 @@
 ﻿namespace apbd_cw2_git_s33974;
 
-public class User(string name, string surname, int allowedLeaseCount)
+public abstract class User(string name, string surname, int allowedLeaseCount)
 {
     public Guid userGuid = Guid.NewGuid();
     public string personName = name;
