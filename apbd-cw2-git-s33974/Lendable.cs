@@ -2,6 +2,7 @@
 
 public interface Lendable
 {
-    Guid? LendEquipment();
-    void ReturnEquipment();
+    bool MakeUnavailable();
+    void MakeAvailable();
+    
 }

@@ -1,23 +1,31 @@
 ﻿namespace apbd_cw2_git_s33974;
 
-public class Equipment(string brand, string name, int baseResWidth, int baseResHeight) : Lendable
+public abstract class Equipment(string brand, string name) : Lendable
 {
-    public Guid eqGuid =  Guid.NewGuid();
+    private static int _nextId = 1;
+
+    public int eqID = _nextId++;
     public bool available = true;
     public string brandName = brand;
     public string eqName = name;
-    public int baseResWidth = baseResWidth;
-    public int baseResHeight = baseResHeight;
-
-    public Guid? LendEquipment()
+    
+    public bool MakeUnavailable()
     {
-        if (!available) return null;
-        available = false;
-        return eqGuid;
+        if (available)
+        {
+            available = false;
+            return true;
+        }
+        return false;
     }
 
-    public void ReturnEquipment()
+    public void MakeAvailable()
     {
         available = true;
+    }
+
+    public string ToString()
+    {
+        return $"Equipment {eqID}: {brandName} {eqName}";
     }
 }
