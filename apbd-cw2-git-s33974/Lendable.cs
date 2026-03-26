@@ -3,5 +3,6 @@
 public interface Lendable
 {
     bool MakeUnavailable();
-    void ReturnEquipment();
+    void MakeAvailable();
+    
 }

@@ -26,16 +26,21 @@ public class Lease()
         this.late = (endDate ?? DateTime.Now) - deadLine;
         this.dailyRate = dailyRate;
         this.lateDays = late.Days > 0 ? late.Days : 0;
-        eq.MakeUnavailable();
+        if (endDate != null)
+            eq.MakeUnavailable();
     }
 
-    public double? getPenalty()
+    public double getPenalty()
     {
         if (lateDays > 0)
             return dailyRate*lateDays;
-        else return null;
+        else return 0;
     }
-
+    public void SetEndDate(DateTime endDate)
+    {
+        this.endDate = endDate;
+    }
+    
     public override string ToString()
     {
         return $"{equipment.brandName} {equipment.eqName} leased by {user.ToString()} on {startDate}; {lateDays} days late.";

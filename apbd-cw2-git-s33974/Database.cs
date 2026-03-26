@@ -15,49 +15,37 @@ public class Database
     {
         if (!equipments.Contains(e)) equipments.Add(e);
     }
+
 //GŁÓWNA LOGIKA BIZNESOWA
-    public void CreateLease(Equipment eq, User us, DateTime startDate, DateTime endDate, DateTime deadLine, double dailyRate)
+    public void CreateLease(Equipment eq, User us, DateTime startDate, DateTime? endDate, DateTime deadLine,
+        double dailyRate)
     {
         bool allowed = true;
-        int userOccurenceCounter = 0;
         string errorCause = "";
-            if (!eq.available)
-            {
-                allowed = false;
-                errorCause = $"Equipment {eq} already leased.";
-            }
-            
-        foreach (Lease l in leases)
+        if (!eq.available)
         {
-            if (l.user.Equals(us) && !l.endDate.HasValue) userOccurenceCounter++;
+            errorCause = $"{eq.ToString()} already leased or unavailable.";
+            Console.WriteLine("Could not create the lease object; " + errorCause);
         }
-        
-        if (userOccurenceCounter >= us.allowedLeaseCount)
-        {
-            allowed = false;
+
+        else if (us.addLease())
+            leases.Add(new Lease(eq, us, startDate, deadLine, endDate, dailyRate));
+        else
+        {   
             errorCause = $"User {us} has reached their limit of active leases.";
+            Console.WriteLine("Could not create the lease object; " + errorCause);
         }
-        if (allowed)
-            leases.Add(new Lease(eq, us, startDate, endDate, deadLine, dailyRate));
-        else Console.WriteLine("Could not create the lease object; " + errorCause);
     }
 
-    public void printActiveLeaseReport()
+    public void ReturnEquipment(int id)
     {
-        
-    }
-    
-    public void printCompleteReport()
-    {   
-        Console.WriteLine($"Users: {users.Count} \nEquipment pieces: {equipments.Count} \nLeases: {leases.Count}\n");
-        Console.WriteLine("Users: ");
-        foreach(var e in users)
-            Console.WriteLine(e.ToString());
-        Console.WriteLine("Equipments: ");
-        foreach(var e in equipments)
-            Console.WriteLine(e.ToString());
-        Console.WriteLine("Leases: ");
-        foreach(var e in leases)
-            Console.WriteLine(e.ToString());
+        foreach (Lease l in leases)
+        {
+            if (l.leaseID == id && !l.endDate.HasValue)
+            {
+                Console.WriteLine($"{l.leaseID} successfully returned. Penalty: {l.getPenalty()}");
+                l.SetEndDate(DateTime.Now);
+            }
+        }
     }
 }

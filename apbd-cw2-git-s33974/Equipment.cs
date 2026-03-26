@@ -19,7 +19,7 @@ public abstract class Equipment(string brand, string name) : Lendable
         return false;
     }
 
-    public void ReturnEquipment()
+    public void MakeAvailable()
     {
         available = true;
     }

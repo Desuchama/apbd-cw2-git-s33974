@@ -8,7 +8,6 @@ public class Program
         
         Employee e1 = new Employee("Abel", "-");
         Employee e2 = new Employee("Cain", "-");
-        Console.WriteLine(e1.ToString());
         
         Laptop l1 = new Laptop("HP", "Notebook", 1280, 720, 13.0, 8);
         Laptop l2 = new Laptop("Acer", "Nitro 5", 1920, 1080, 15.3, 16);
@@ -27,21 +26,28 @@ public class Program
         db.equipments.Add(p1);
         db.equipments.Add(p2);
         Console.WriteLine(e1.ToString());
+        Console.WriteLine(e2.ToString());
         
-        Lease lease1 = new Lease(l1, e1, new DateTime(2020, 1, 1), new DateTime(2020, 2, 1), null , 0.20);
-        Lease lease2 = new Lease(l2, e1, new DateTime(2026, 3, 15), new DateTime(2026, 3, 30), new DateTime(2026, 3, 30), 0.20);
-        Lease lease3 = new Lease(c1, e1, new DateTime(2026, 3, 15), new DateTime(2026, 3, 22), new DateTime(2026, 3, 30),0.20);
-        Lease lease4 = new Lease(c2, e1, new DateTime(2025, 3, 15), new DateTime(2026, 3, 22),new DateTime(2026, 3, 19), 0.20);
-        Lease lease5 = new Lease(p1, e1, new DateTime(2026, 1, 15), new DateTime(2026, 3, 1), null, 0.20);
-        // Lease lease6 = new Lease(p2, e1, new DateTime(2026, 3, 15), new DateTime(2026, 3, 22), 0.20);
-        Console.WriteLine(lease1.getPenalty());
-        Console.WriteLine(lease2.getPenalty());
-        Console.WriteLine(lease3.getPenalty());
-        Console.WriteLine(lease4.getPenalty());
-        Console.WriteLine(lease5.getPenalty());
+        db.CreateLease(l1, e1, new DateTime(2020, 1, 1), null, new DateTime(2020, 2, 1) , 0.20);
+        db.CreateLease(l2, e1, new DateTime(2026, 3, 15), new DateTime(2026, 3, 30), new DateTime(2026, 3, 30), 0.20);
+        db.CreateLease(c1, e1, new DateTime(2026, 3, 15), new DateTime(2026, 3, 22), new DateTime(2026, 3, 30),0.20);
+        db.CreateLease(c2, e1, new DateTime(2025, 3, 15), new DateTime(2026, 3, 22),new DateTime(2026, 3, 19), 0.20);
+        db.CreateLease(p1, e1, new DateTime(2026, 1, 15), null, new DateTime(2026, 3, 1), 0.20);
+        db.CreateLease(p2, e1, new DateTime(2026, 3, 15), null, new DateTime(2026, 3, 30), 0.20);
+        db.CreateLease(p2, e1, new DateTime(2026, 3, 15), null, new DateTime(2026, 3, 22), 0.20);
+        db.CreateLease(c2, e1, new DateTime(2025, 3, 15), null,new DateTime(2026, 3, 19), 0.20);
+        db.CreateLease(c1, e1, new DateTime(2026, 3, 15), null, new DateTime(2026, 3, 30),0.20);
+        db.CreateLease(l2, e1, new DateTime(2026, 3, 15), null, new DateTime(2026, 3, 30), 0.20);
+        db.CreateLease(p2, e2, new DateTime(2026, 3, 15), null, new DateTime(2026, 3, 30), 0.20);
+
         
-        Console.WriteLine(e1.ToString());
-        Console.WriteLine(db.users[0].ToString());
-        db.printCompleteReport();
+        db.ReturnEquipment(1);
+        db.ReturnEquipment(2);
+        
+        ReportPrinter rp = new ReportPrinter(db);
+        
+        rp.printPenalties();
+        rp.printActiveLeaseReport();
+        rp.printCompleteReport();
     }
 }
