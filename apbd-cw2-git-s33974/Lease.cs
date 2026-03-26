@@ -10,6 +10,7 @@ public class Lease()
     public DateTime endDate;
     public TimeSpan late;
     public double dailyRate;
+    public int? lateDays;
 
     public Lease(Equipment eq, User us, DateTime startDate, DateTime endDate, double dailyRate) : this()
     {
@@ -23,12 +24,20 @@ public class Lease()
         this.endDate = endDate;
         this.late = DateTime.Now - endDate;
         this.dailyRate = dailyRate;
+        if (late.Days > 0)
+            this.lateDays = late.Days;
+        else this.lateDays = 0;
     }
 
     public double? getPenalty()
     {
-        if (late.Days > 0)
-            return dailyRate*late.Days;
+        if (lateDays > 0)
+            return dailyRate*lateDays;
         else return null;
+    }
+
+    public override string ToString()
+    {
+        return $"{equipment.brandName} {equipment.eqName} leased by {user.ToString()} on {startDate}; {lateDays} days late.";
     }
 }

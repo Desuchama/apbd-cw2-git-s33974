@@ -1,8 +1,9 @@
 ﻿namespace apbd_cw2_git_s33974;
 
-public abstract class User(string name, string surname, int allowedLeaseCount)
+public abstract class User(string role, string name, string surname, int allowedLeaseCount)
 {
     public Guid userGuid = Guid.NewGuid();
+    public string role = role;
     public string personName = name;
     public string personSurname = surname;
     public int allowedLeaseCount = allowedLeaseCount;
@@ -25,5 +26,10 @@ public abstract class User(string name, string surname, int allowedLeaseCount)
             return true;
         }
         return false;
+    }
+
+    public override string ToString()
+    {
+        return role + " GUID: " + userGuid + " Name: " + personName + " " + personSurname + ", Leases: " + currentLeaseCount + "/" + allowedLeaseCount;
     }
 }

@@ -23,4 +23,9 @@ public abstract class Equipment(string brand, string name, int baseResWidth, int
     {
         available = true;
     }
+
+    public string ToString()
+    {
+        return brandName + " " + eqName;
+    }
 }
